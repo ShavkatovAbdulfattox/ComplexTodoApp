@@ -1,7 +1,7 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   --color-text: hsl(222deg, 22%, 5%);
-  --color-background: hsl(210deg, 30%, 8%);
+  --color-background: rgb(29, 33, 37);
   --color-bg-secondary: #222a33;
   --color-active-primary: #0000ff;
   --color-blurred-background: hsla(210deg, 30%, 8%, 0.85);
@@ -196,5 +196,5 @@ body,
 #root {
   height: 100%;
   scroll-behavior: smooth;
-  background: var(--color-background);
+  background-color: #fff;
 }

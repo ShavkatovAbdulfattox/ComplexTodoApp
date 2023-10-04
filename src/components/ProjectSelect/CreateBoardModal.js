@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import s from "./style.module.css";
-import close from "../../assets/images/close.svg";
+import closeIcon from "../../assets/images/close.svg";
 import board from "../../assets/images/board.svg";
-import img from "../../assets/images/img.jpg";
-import img2 from "../../assets/images/img2.jpg";
-import img3 from "../../assets/images/img3.jpg";
-import img4 from "../../assets/images/img4.jpg";
+import img from "../../assets/images/img.jpeg";
+import img2 from "../../assets/images/img2.jpeg";
+import img3 from "../../assets/images/img3.jpeg";
+import img4 from "../../assets/images/img4.jpeg";
+import { motion } from "framer-motion";
 
-function CreateBoardModal({ width }) {
+function CreateBoardModal({ width, close }) {
   const [value, setValue] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
 
   const handleClick = (e) => {
     const { target } = e;
+    // Check if the clicked element has the "img" class
+    if (!target.tagName.toLowerCase() === "img") return;
     setSelectedImage(target.src); // Set the selected image src
+    console.log(target);
   };
 
   const modalBackgroundStyle = {
@@ -32,11 +36,11 @@ function CreateBoardModal({ width }) {
       <div className={s.modal}>
         <header className={s.title}>
           <h2 title="Create board">Create board</h2>
-          <button>
+          <motion.button whileTap={{ scale: 0.9 }} onClick={() => close(false)}>
             <span aria-label="Close popover">
-              <img src={close} alt="close" />
+              <img src={closeIcon} alt="close" />
             </span>
-          </button>
+          </motion.button>
         </header>
 
         <div className={s.boardImg} style={modalBackgroundStyle}>
@@ -46,10 +50,10 @@ function CreateBoardModal({ width }) {
         <div className={s.background_content}>
           <label htmlFor="background-picker">Background</label>
           <div className={s.background_images} onClick={handleClick}>
-            <img src={img} alt="bg-images" />
-            <img src={img2} alt="bg-images" />
-            <img src={img3} alt="bg-images" />
-            <img src={img4} alt="bg-images" />
+            <img src={img} alt="bg-images" loading="lazy" />
+            <img src={img2} alt="bg-images" loading="lazy" />
+            <img src={img3} alt="bg-images" loading="lazy" />
+            <img src={img4} alt="bg-images" loading="lazy" />
           </div>
         </div>
         <form>

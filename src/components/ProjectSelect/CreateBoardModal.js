@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import s from "./style.module.css";
 import closeIcon from "../../assets/images/close.svg";
 import board from "../../assets/images/board.svg";
@@ -11,7 +11,7 @@ import { motion } from "framer-motion";
 function CreateBoardModal({ width, close }) {
   const [value, setValue] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
-
+  const modalRef = useRef(null);
   const handleClick = (e) => {
     const { target } = e;
     // Check if the clicked element has the "img" class
@@ -31,9 +31,9 @@ function CreateBoardModal({ width, close }) {
     <section
       className={s.wrapper}
       role="createProject-modal"
-      style={{ transform: `translateX(calc(${width}px + 20px))` }}
+      style={{ transform: `translateX(${width + 15}px)` }}
     >
-      <div className={s.modal}>
+      <div className={s.modal} ref={modalRef}>
         <header className={s.title}>
           <h2 title="Create board">Create board</h2>
           <motion.button whileTap={{ scale: 0.9 }} onClick={() => close(false)}>

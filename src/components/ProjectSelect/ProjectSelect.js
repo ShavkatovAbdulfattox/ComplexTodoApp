@@ -6,6 +6,7 @@ import CreateBoardModal from "./CreateBoardModal";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state";
+import { Link } from "react-router-dom";
 
 function ProjectSelect() {
   const { boards } = useSelector((state) => state.board);
@@ -51,10 +52,11 @@ function ProjectSelect() {
 
       {boards.length >= 0 && (
         <div className={s.boardsWrapper}>
-          {boards.map(({ name, img, imgNum, id }) => {
+          {boards.map(({ name, img, imgNum,id }) => {
             return (
               <motion.button
                 whileTap={{ scale: 0.9 }}
+                to={`board/${name + id}`}
                 className={s.button}
                 key={id}
                 style={{
@@ -64,7 +66,7 @@ function ProjectSelect() {
                   color: "white",
                 }}
               >
-                {name}
+                <Link to={`board/${name}${id}`}>{name}</Link>
               </motion.button>
             );
           })}

@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import s from "./style.module.css";
 import closeIcon from "../../assets/images/close.svg";
 import board from "../../assets/images/board.svg";
@@ -7,18 +7,18 @@ import img2 from "../../assets/images/img2.jpeg";
 import img3 from "../../assets/images/img3.jpeg";
 import img4 from "../../assets/images/img4.jpeg";
 import { motion } from "framer-motion";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateBoardModal({ width, close, create }) {
   const [value, setValue] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedImgNum, setSelectedImgNum] = useState(0);
   const modalRef = useRef(null);
-  const id = useId();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const board = {
-      id: id,
+      id: uuidv4(),
       name: value,
       img: selectedImage,
       renderImgNo: selectedImgNum,

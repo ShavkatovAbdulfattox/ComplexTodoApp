@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../components/App";
+import MyBoard from "../components/MyBoard/MyBoard";
 
 export const router = createBrowserRouter([
   {
@@ -7,7 +8,7 @@ export const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/tasks",
-    element: <p>Tasks</p>,
+    path: "/board/:nameAndId",
+    element: <MyBoard />,
   },
 ]);

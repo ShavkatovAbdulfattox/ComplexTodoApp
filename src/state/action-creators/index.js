@@ -5,13 +5,12 @@ import {
 
 export const createBoard = (obj) => {
   return (dispatch) => {
-    
     const existingBoards = getFromLocalStorage("boards") || [];
-    
+
     existingBoards.push(obj);
-    
+
     // Update the modified array back into localStorage
-    
+
     setToLocalStorage("boards", existingBoards);
 
     dispatch({

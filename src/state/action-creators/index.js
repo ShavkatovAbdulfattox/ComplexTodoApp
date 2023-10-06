@@ -1,8 +1,8 @@
-export const depositMoney = (amount) => {
+export const createBoard = (obj) => {
   return (dispatch) => {
     dispatch({
-      type: "deposit",
-      payload: amount,
+      type: "CREATE_BOARD",
+      payload: obj,
     });
   };
 };

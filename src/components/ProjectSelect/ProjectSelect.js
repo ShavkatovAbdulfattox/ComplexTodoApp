@@ -8,12 +8,10 @@ import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state";
 
 function ProjectSelect() {
-  const state = useSelector((state) => state.board);
+  const { boards } = useSelector((state) => state.board);
+  console.log(boards);
   const dispatch = useDispatch();
-
-  const AC = bindActionCreators(actionCreators, dispatch);
-
-  console.log(AC);
+  const { createBoard } = bindActionCreators(actionCreators, dispatch);
 
   const [isVisible, setIsVisible] = useState(false);
   const [width, setWidth] = useState(null);
@@ -34,7 +32,13 @@ function ProjectSelect() {
 
   return (
     <div className="container">
-      {isVisible && <CreateBoardModal width={width} close={closeModal} />}
+      {isVisible && (
+        <CreateBoardModal
+          width={width}
+          close={closeModal}
+          create={createBoard}
+        />
+      )}
 
       <motion.button
         whileTap={{ scale: 0.9 }}
@@ -44,6 +48,28 @@ function ProjectSelect() {
       >
         Create new board <img src={plus} alt="plus-icon" />
       </motion.button>
+
+      {boards.length >= 0 && (
+        <div className={s.boardsWrapper}>
+          {boards.map(({ name, img, imgNum, id }) => {
+            return (
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className={s.button}
+                key={id}
+                style={{
+                  background: !img ? "black" : `url(${img})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                  color: "white",
+                }}
+              >
+                {name}
+              </motion.button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

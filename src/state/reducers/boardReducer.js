@@ -1,9 +1,12 @@
-const initialState = { amount: 0 };
+const initialState = { boards: [] };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case "deposit":
-      return state.amount + payload;
+    case "CREATE_BOARD":
+      return {
+        ...state,
+        boards: [...state.boards, payload],
+      };
 
     default:
       return state;

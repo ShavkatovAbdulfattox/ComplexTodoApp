@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import s from "./style.module.css";
 import closeIcon from "../../assets/images/close.svg";
 import board from "../../assets/images/board.svg";
@@ -8,16 +8,33 @@ import img3 from "../../assets/images/img3.jpeg";
 import img4 from "../../assets/images/img4.jpeg";
 import { motion } from "framer-motion";
 
-function CreateBoardModal({ width, close }) {
+function CreateBoardModal({ width, close, create }) {
   const [value, setValue] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
+  const [selectedImgNum, setSelectedImgNum] = useState(0);
   const modalRef = useRef(null);
+  const id = useId();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const board = {
+      id: id,
+      name: value,
+      img: selectedImage,
+      renderImgNo: selectedImgNum,
+    };
+    create(board);
+    close(false);
+  };
+
   const handleClick = (e) => {
     const { target } = e;
+    const numberImg = target.dataset.num;
     // Check if the clicked element has the "img" class
     if (!target.tagName.toLowerCase() === "img") return;
     setSelectedImage(target.src); // Set the selected image src
-    console.log(target);
+    setSelectedImgNum(numberImg);
+    console.log();
   };
 
   const modalBackgroundStyle = {
@@ -50,13 +67,13 @@ function CreateBoardModal({ width, close }) {
         <div className={s.background_content}>
           <label htmlFor="background-picker">Background</label>
           <div className={s.background_images} onClick={handleClick}>
-            <img src={img} alt="bg-images" loading="lazy" />
-            <img src={img2} alt="bg-images" loading="lazy" />
-            <img src={img3} alt="bg-images" loading="lazy" />
-            <img src={img4} alt="bg-images" loading="lazy" />
+            <img src={img} alt="bg-images" loading="lazy" data-num="0" />
+            <img src={img2} alt="bg-images" loading="lazy" data-num="1" />
+            <img src={img3} alt="bg-images" loading="lazy" data-num="2" />
+            <img src={img4} alt="bg-images" loading="lazy" data-num="3" />
           </div>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label className={s.form_title}>
             <div>
               Board title<span className={s.star}>*</span>

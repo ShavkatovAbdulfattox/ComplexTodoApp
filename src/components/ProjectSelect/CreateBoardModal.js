@@ -23,7 +23,10 @@ function CreateBoardModal({ width, close, create }) {
       img: selectedImage,
       renderImgNo: selectedImgNum,
     };
+
+    // Create board
     create(board);
+    //Close the board
     close(false);
   };
 
@@ -34,7 +37,6 @@ function CreateBoardModal({ width, close, create }) {
     if (!target.tagName.toLowerCase() === "img") return;
     setSelectedImage(target.src); // Set the selected image src
     setSelectedImgNum(numberImg);
-    console.log();
   };
 
   const modalBackgroundStyle = {

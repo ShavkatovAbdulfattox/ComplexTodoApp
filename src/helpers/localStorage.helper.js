@@ -9,7 +9,7 @@ export const setToLocalStorage = (name, value) => {
 export const getFromLocalStorage = (name) => {
   let result = null;
   try {
-    const localStorageValue = getFromLocalStorage(name);
+    const localStorageValue = localStorage.getItem(name); // Use localStorage.getItem here
     if (localStorageValue) {
       result = JSON.parse(localStorageValue);
     }

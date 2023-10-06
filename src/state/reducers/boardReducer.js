@@ -1,4 +1,6 @@
-const initialState = { boards: [] };
+import { getFromLocalStorage } from "../../helpers/localStorage.helper";
+
+const initialState = { boards: getFromLocalStorage("boards") ?? [] };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {

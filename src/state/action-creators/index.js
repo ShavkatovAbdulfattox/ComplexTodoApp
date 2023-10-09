@@ -19,3 +19,12 @@ export const createBoard = (obj) => {
     });
   };
 };
+
+export const addNewTitle = (obj) => {
+  return (dispatch) => {
+    dispatch({
+      type: "ADD_NEW_TITLE",
+      payload: obj,
+    });
+  };
+};

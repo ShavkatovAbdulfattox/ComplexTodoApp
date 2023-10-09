@@ -10,6 +10,52 @@
         justify-content: space-around;
         gap: 30px;
     }
+
+    &_text {
+
+        &__card {
+            & textarea {
+                width: 100%;
+                overflow: hidden;
+                overflow-wrap: break-word;
+                resize: none;
+                height: 54px;
+                background: none;
+                border: 1px solid gray;
+                border-radius: 10px;
+                box-shadow: none;
+                padding: 5px;
+                font-size: 1rem;
+
+            }
+
+            &>div {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+
+                & svg {
+                    font-size: 1.4rem;
+                    cursor: pointer;
+                }
+
+                & button {
+                    background: var(--color-primary);
+                    color: white;
+                    transition: 0.3s;
+                    border: none;
+                    padding: 5px 10px;
+                    font-size: .9rem;
+                    cursor: pointer;
+
+                    &:hover,
+                    &:active {
+                        background: var(--color-active-primary);
+                    }
+                }
+            }
+        }
+    }
 }
 
 .list_wrapper {

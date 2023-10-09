@@ -20,7 +20,7 @@ export const createBoard = (obj) => {
   };
 };
 
-export const addNewTitle = (obj) => {
+export const addNewTaskTitle = (obj) => {
   return (dispatch) => {
     dispatch({
       type: "ADD_NEW_TITLE",

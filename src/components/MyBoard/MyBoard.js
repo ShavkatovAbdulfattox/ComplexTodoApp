@@ -6,17 +6,35 @@ import s from "./style.module.scss";
 
 import dots from "../../assets/images/dots.svg";
 import plus from "../../assets/images/plus.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state";
 
 function MyBoard() {
+  const { boards } = useSelector((state) => state.board);
+
+  console.log(boards);
+  const dispatch = useDispatch();
+
+  const { addNewTaskTitle } = bindActionCreators(actionCreators, dispatch);
+
   const { nameAndId } = useParams();
   const [textCardValue, setCardTextValue] = useState("");
   const [isOpenTextCard, setIsOpenTextCard] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(nameAndId);
 
-    setIsOpenTextCard(false);
+    const textCardObj = {
+      id: nameAndId,
+      value: textCardValue,
+    };
+    console.log(textCardObj);
+    // adding New
+    addNewTaskTitle(textCardObj);
+
+    // close text card
+    // setIsOpenTextCard(false);
   };
 
   return (

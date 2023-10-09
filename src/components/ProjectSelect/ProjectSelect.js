@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 
 function ProjectSelect() {
   const { boards } = useSelector((state) => state.board);
-  console.log(boards);
   const dispatch = useDispatch();
   const { createBoard } = bindActionCreators(actionCreators, dispatch);
 
@@ -52,7 +51,7 @@ function ProjectSelect() {
 
       {boards.length >= 0 && (
         <div className={s.boardsWrapper}>
-          {boards.map(({ name, img, imgNum,id }) => {
+          {boards.map(({ name, img, imgNum, id }) => {
             return (
               <motion.button
                 whileTap={{ scale: 0.9 }}
@@ -66,7 +65,7 @@ function ProjectSelect() {
                   color: "white",
                 }}
               >
-                <Link to={`board/${name}${id}`}>{name}</Link>
+                <Link to={`board/${id}`}>{name}</Link>
               </motion.button>
             );
           })}

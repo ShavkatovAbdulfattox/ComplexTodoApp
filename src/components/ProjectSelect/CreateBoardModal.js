@@ -22,6 +22,25 @@ function CreateBoardModal({ width, close, create }) {
       name: value,
       img: selectedImage,
       renderImgNo: selectedImgNum,
+      tasks: {},
+      cards: {
+        do: {
+          id: "card-1",
+          title: "Home Todos",
+          taskIds: ["task-1", "task-2"],
+        },
+        doing: {
+          id: "card-2",
+          title: "Work Todos",
+          taskIds: ["task-3"],
+        },
+        done: {
+          id: "card-2",
+          title: "Work Todos",
+          taskIds: ["task-3"],
+        },
+      },
+      cardOrder: ["do", "doing", "done"],
     };
 
     // Create board

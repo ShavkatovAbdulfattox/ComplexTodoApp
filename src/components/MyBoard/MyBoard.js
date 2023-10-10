@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
-import { AiOutlineClose } from "react-icons/ai";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
+import { Form, useParams } from "react-router-dom";
+
 import s from "./style.module.scss";
 
-import plus from "../../assets/images/plus.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state";
 import { v4 as uuidv4 } from "uuid";
-import Tasks from "./Tasks";
+import Card from "./Card";
 
 function MyBoard() {
   const { nameAndId } = useParams();
@@ -63,48 +63,35 @@ function MyBoard() {
     <div className={s.wrapper}>
       <h2>Page with tasks</h2>
 
-      <section className={s.wrapper_content}>
-        <article className={s.list_wrapper}>
-          <div className={s.list_wrapper__header}>
-            <h3>To Do</h3>
-           
-          </div>{" "}
-          {boardTaskTitle?.tasks?.length >= 0 && (
-            <Tasks boardTaskTitle={boardTaskTitle} />
-          )}
-          {!isOpenTextCard && (
-            <motion.div
-              className={s.list_wrapper__action}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setIsOpenTextCard(true)}
-            >
-              <p>
-                {" "}
-                <span>
-                  <img src={plus} alt="plus" />
-                </span>{" "}
-                Add a card
-              </p>
-            </motion.div>
-          )}
-          {isOpenTextCard && (
-            <form className={s.wrapper_text__card} onSubmit={handleSubmit}>
-              <textarea
-                name="text_area"
-                value={textCardValue}
-                onChange={(e) => setCardTextValue(e.target.value)}
-                placeholder="Enter title for this card"
-              />
-              <div>
-                <button>Add card</button>
-                <AiOutlineClose onClick={() => setIsOpenTextCard(false)} />
-              </div>
-            </form>
-          )}
-        </article>
-        <article className={s.list_wrapper}></article>
-        <article className={s.list_wrapper}></article>
-      </section>
+      {/* // ! Drag and drop context  */}
+      <DragDropContext>
+        {/* // **  Droppable * */}
+
+        <Droppable droppableId="all-cards" direction="horizontal" type="card">
+          {(provided) => {
+            console.log(provided);
+            return (
+              <section
+                className={s.wrapper_content}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {console.log(provided.placeholder)}
+                {/* // ! Card */}
+                <Card
+                  boardTaskTitle={boardTaskTitle}
+                  setIsOpenTextCard={setIsOpenTextCard}
+                  isOpenTextCard={isOpenTextCard}
+                  textCardValue={textCardValue}
+                  setCardTextValue={setCardTextValue}
+                  handleSubmit={handleSubmit}
+                />
+                {provided.placeholder}
+              </section>
+            );
+          }}
+        </Droppable>
+      </DragDropContext>
     </div>
   );
 }

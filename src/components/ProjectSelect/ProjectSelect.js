@@ -27,7 +27,6 @@ function ProjectSelect() {
   useEffect(() => {
     let width = widthBox.current.getBoundingClientRect().width;
     setWidth(width);
-    console.log(width);
   }, []);
 
   return (
@@ -49,15 +48,15 @@ function ProjectSelect() {
         Create new board <img src={plus} alt="plus-icon" />
       </motion.button>
 
-      {boards.length >= 0 && (
+      {boards.length >= 0 ? (
         <div className={s.boardsWrapper}>
-          {boards.map(({ name, img, imgNum, id }) => {
+          {boards?.map((item) => {
+            const { name, img, imgNum, id } = item.board;
             return (
               <motion.button
-                whileTap={{ scale: 0.9 }}
-                to={`board/${name + id}`}
-                className={s.button}
                 key={id}
+                whileTap={{ scale: 0.9 }}
+                className={s.button}
                 style={{
                   background: !img ? "black" : `url(${img})`,
                   backgroundRepeat: "no-repeat",
@@ -70,7 +69,7 @@ function ProjectSelect() {
             );
           })}
         </div>
-      )}
+      ) : undefined}
     </div>
   );
 }

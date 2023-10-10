@@ -81,23 +81,7 @@
             margin-right: auto;
         }
 
-        & button {
-            border: none;
-            background: transparent;
-            outline: none;
-            cursor: pointer;
-            transition: .3s;
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            &:hover {
-                background-color: #091e4224;
-            }
-        }
+       
     }
 
     &__action {

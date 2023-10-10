@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { AiOutlineClose } from "react-icons/ai";
 import s from "./style.module.scss";
 
-import dots from "../../assets/images/dots.svg";
 import plus from "../../assets/images/plus.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -68,9 +67,7 @@ function MyBoard() {
         <article className={s.list_wrapper}>
           <div className={s.list_wrapper__header}>
             <h3>To Do</h3>
-            <button>
-              <img src={dots} alt="dots" />
-            </button>
+           
           </div>{" "}
           {boardTaskTitle?.tasks?.length >= 0 && (
             <Tasks boardTaskTitle={boardTaskTitle} />

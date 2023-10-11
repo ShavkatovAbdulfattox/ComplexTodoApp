@@ -22,28 +22,22 @@ function CreateBoardModal({ width, close, create }) {
       name: value,
       img: selectedImage,
       renderImgNo: selectedImgNum,
-      tasks: {
-        "task-1": { id: "task-1", content: "water plants" },
-        "task-2": { id: "task-2", content: "buy oat milk" },
-        "task-3": { id: "task-3", content: "build a trello board" },
-        "task-4": { id: "task-4", content: "have a beach day" },
-        "task-5": { id: "task-5", content: "build tic tac toe" },
-      },
+      tasks: {},
       cards: {
         do: {
           id: "do",
           title: "Do",
-          taskIds: ["task-1", "task-2"],
+          taskIds: [],
         },
         doing: {
           id: "doing",
           title: "Doing",
-          taskIds: ["task-3"],
+          taskIds: [],
         },
         done: {
           id: "done",
           title: "Done",
-          taskIds: ["task-3"],
+          taskIds: [],
         },
       },
       cardOrder: ["do", "doing", "done"],

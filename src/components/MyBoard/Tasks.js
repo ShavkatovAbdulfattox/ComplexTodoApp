@@ -18,11 +18,12 @@ function Tasks({ tasks, index }) {
       <Draggable draggableId={tasks.id} index={index}>
         {(provided, snapshot) => {
           return (
-            <div
-              className={s.wrapper_title}
-              {...provided.dragHandleProps}
+            <div 
+            {...provided.draggableProps}
               {...provided.dragHandleProps}
               ref={provided.innerRef}
+              className={s.wrapper_title}
+             
               style={{
                 backgroundColor: snapshot.isDragging && snapshot.isDragging ? "lightblue" : "white",
                 // Add other styles as needed

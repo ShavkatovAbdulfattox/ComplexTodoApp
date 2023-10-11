@@ -16,12 +16,18 @@ function MyBoard() {
 
   const { board } = boards.find((item) => item.board.id === nameAndId);
 
+  const onDragEnd = (result) => {
+    console.log(result);
+    // console.log("some");
+    // const { destination, source, draggableId, type } = result;
+  };
+
   return (
     <div className={s.wrapper}>
       <h2>Page with tasks</h2>
 
       {/* // ! Drag and drop context  */}
-      <DragDropContext>
+      <DragDropContext onDragEnd={onDragEnd}>
         {/* // **  Droppable * */}
 
         <Droppable droppableId="all-cards" direction="horizontal" type="card">
@@ -38,6 +44,9 @@ function MyBoard() {
                   const cardTask = card.taskIds.map(
                     (taskIds) => board.tasks[taskIds]
                   );
+                  {
+                    /* // ! Card */
+                  }
                   return (
                     <Card
                       key={card.id}
@@ -49,7 +58,6 @@ function MyBoard() {
                     />
                   );
                 })}
-                {/* // ! Card */}
 
                 {provided.placeholder}
               </section>

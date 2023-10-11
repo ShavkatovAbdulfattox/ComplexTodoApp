@@ -19,7 +19,7 @@ function Card({ boards, boardID, card, tasks, index }) {
 
   const [isAddingNewTask, setIsAddingNewTask] = useState(false);
   const [textCardValue, setCardTextValue] = useState("");
- 
+
   const onAddNewTaskTitle = (e, cardID) => {
     e.preventDefault();
 
@@ -28,7 +28,7 @@ function Card({ boards, boardID, card, tasks, index }) {
       content: textCardValue,
     };
     // * adding New
-    addNewTaskTitle(newTask,cardID, boardID);
+    addNewTaskTitle(newTask, cardID, boardID);
 
     // * close text card
     setIsAddingNewTask(false);
@@ -69,14 +69,15 @@ function Card({ boards, boardID, card, tasks, index }) {
             >
               <h3>{card.title}</h3>
             </div>{" "}
-            <Droppable droppableId={card.id} type="task">
+            {console.log(card.id)}
+            <Droppable droppableId={card.id} direction="vertical" type="task">
               {(provided, snapshot) => {
                 return (
                   <>
                     <div
-                      className={s.taskList}
                       ref={provided.innerRef}
                       {...provided.droppableProps}
+                      className={s.taskList}
                       style={{
                         backgroundColor: snapshot.isDraggingOver
                           ? "lightgreen"

@@ -5,18 +5,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin: 15px 0;
-        background: var(--color-gray-100);
-        transition: .3s;
-        font-size: 1rem;
-        padding: 10px 15px;
-        cursor: pointer;
-        border-radius: 15px;
+        // margin: 15px 0;
 
-        &:hover,
-        &:active {
-            background: var(--color-gray-200);
-        }
 
         & button {
             font-size: 1rem;

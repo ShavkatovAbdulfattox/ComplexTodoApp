@@ -3,8 +3,9 @@ import s from "./task.module.scss";
 
 import useToggle from "../hook/useToggle";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { Draggable } from "react-beautiful-dnd";
 
-function Tasks({ boardTaskTitle }) {
+function Tasks({ tasks, index }) {
   const [isVisibleModal, setIsVisibleModal] = useToggle(false);
 
   const removeElement = () => {
@@ -13,18 +14,29 @@ function Tasks({ boardTaskTitle }) {
   };
 
   return (
-    <div className={s.wrapper}>
-      {boardTaskTitle?.tasks?.map((el, i) => {
-        return (
-          <div key={i} className={s.wrapper_title}>
-            {el.title}
-            <button onClick={removeElement}>
-              <RiDeleteBinLine />
-            </button>
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <Draggable draggableId={tasks.id} index={index}>
+        {(provided, snapshot) => {
+          return (
+            <div
+              className={s.wrapper_title}
+              {...provided.dragHandleProps}
+              {...provided.dragHandleProps}
+              ref={provided.innerRef}
+              style={{
+                backgroundColor: snapshot.isDragging ? "lightblue" : "white",
+                // Add other styles as needed
+              }}
+            >
+              {tasks.content}
+              <button>
+                <RiDeleteBinLine />
+              </button>
+            </div>
+          );
+        }}
+      </Draggable>
+    </>
   );
 }
 

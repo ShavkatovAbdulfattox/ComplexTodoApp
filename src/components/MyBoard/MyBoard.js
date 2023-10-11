@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import { Form, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 import s from "./style.module.scss";
 
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 import { actionCreators } from "../../state";
-import { v4 as uuidv4 } from "uuid";
 import Card from "./Card";
 
 function MyBoard() {
@@ -20,45 +19,9 @@ function MyBoard() {
   const { addNewTaskTitle } = bindActionCreators(actionCreators, dispatch);
 
   const [textCardValue, setCardTextValue] = useState("");
-  const [isOpenTextCard, setIsOpenTextCard] = useState(false);
 
-  useEffect(() => {
-    if (!isOpenTextCard && !textCardValue) return;
-    const handleEnterKeyPressed = (e) => {
-      if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault(); // Prevent newline in textarea
-        handleSubmit(e);
-      }
-    };
-
-    document.addEventListener("keydown", handleEnterKeyPressed);
-
-    return () => {
-      document.removeEventListener("keydown", handleEnterKeyPressed);
-    };
-  }, [textCardValue]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const textCardObj = {
-      id: nameAndId,
-      value: textCardValue,
-      newID: uuidv4(),
-    };
-    console.log(textCardObj);
-    // adding New
-    addNewTaskTitle(textCardObj);
-
-    // close text card
-    setIsOpenTextCard(false);
-
-    // set value to null
-    setCardTextValue("");
-  };
-
-  const boardTaskTitle = boards.find((board) => board.id === nameAndId);
-
+  const { board } = boards.find((item) => item.board.id === nameAndId);
+  console.log(board);
   return (
     <div className={s.wrapper}>
       <h2>Page with tasks</h2>
@@ -69,23 +32,36 @@ function MyBoard() {
 
         <Droppable droppableId="all-cards" direction="horizontal" type="card">
           {(provided) => {
-            console.log(provided);
+            // console.log(provided);
             return (
               <section
                 className={s.wrapper_content}
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {console.log(provided.placeholder)}
+                {board.cardOrder.map((id, index) => {
+                  const card = board.cards[id];
+                  console.log(card.taskIds);
+                  const cardTask = card.taskIds.map(
+                    (taskIds) => board.tasks[taskIds]
+                  );
+                  console.log(cardTask);
+                  return (
+                    <Card
+                      key={card.id}
+                      card={card}
+                      tasks={cardTask}
+                      index={index}
+                      boards={boards}
+                      boardID={nameAndId}
+                      textCardValue={textCardValue}
+                      setCardTextValue={setCardTextValue}
+                      addNewTaskTitle={addNewTaskTitle}
+                    />
+                  );
+                })}
                 {/* // ! Card */}
-                <Card
-                  boardTaskTitle={boardTaskTitle}
-                  setIsOpenTextCard={setIsOpenTextCard}
-                  isOpenTextCard={isOpenTextCard}
-                  textCardValue={textCardValue}
-                  setCardTextValue={setCardTextValue}
-                  handleSubmit={handleSubmit}
-                />
+
                 {provided.placeholder}
               </section>
             );

@@ -8,21 +8,27 @@ import s from "./style.module.scss";
 import { useSelector } from "react-redux";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
+import { actionCreators } from "../../state";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 
-function Card({ boards, boardID, card, tasks, index, addNewTaskTitle }) {
+function Card({ boards, boardID, card, tasks, index }) {
+  const dispatch = useDispatch();
+
+  const { addNewTaskTitle } = bindActionCreators(actionCreators, dispatch);
+
   const [isAddingNewTask, setIsAddingNewTask] = useState(false);
   const [textCardValue, setCardTextValue] = useState("");
-  const onAddNewTaskTitle = (e) => {
+ 
+  const onAddNewTaskTitle = (e, cardID) => {
     e.preventDefault();
 
-    const textCardObj = {
-      id: boardID,
-      value: textCardValue,
-      newID: uuidv4(),
+    const newTask = {
+      id: "task-" + uuidv4(),
+      content: textCardValue,
     };
-    console.log(textCardObj);
     // * adding New
-    addNewTaskTitle(textCardObj);
+    addNewTaskTitle(newTask,cardID, boardID);
 
     // * close text card
     setIsAddingNewTask(false);
@@ -36,7 +42,7 @@ function Card({ boards, boardID, card, tasks, index, addNewTaskTitle }) {
     const handleEnterKeyPressed = (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault(); // Prevent newline in textarea
-        onAddNewTaskTitle(e);
+        onAddNewTaskTitle(e, card.id);
       }
     };
 
@@ -62,34 +68,32 @@ function Card({ boards, boardID, card, tasks, index, addNewTaskTitle }) {
               {...provided.dragHandleProps}
             >
               <h3>{card.title}</h3>
-               </div>{" "}
-              <Droppable droppableId={card.id} type="task">
-                {(provided, snapshot) => {
-                  return (
-                    <>
-                      <div
-                        className={s.taskList}
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                        style={{
-                          backgroundColor: snapshot.isDraggingOver
-                            ? "red"
-                            : "white",
-                          // Add other styles as needed
-                        }}
-                      >
-                        {tasks.map((tasks, index) => {
-                          return (
-                            <Tasks key={tasks.id} tasks={tasks} index={index} />
-                          );
-                        })}
-                      </div>
-                      {provided.placeholder}
-                    </>
-                  );
-                }}
-              </Droppable>{" "}
-           
+            </div>{" "}
+            <Droppable droppableId={card.id} type="task">
+              {(provided, snapshot) => {
+                return (
+                  <>
+                    <div
+                      className={s.taskList}
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                      style={{
+                        backgroundColor: snapshot.isDraggingOver
+                          ? "lightgreen"
+                          : "",
+                      }}
+                    >
+                      {tasks.map((tasks, index) => {
+                        return (
+                          <Tasks key={tasks.id} tasks={tasks} index={index} />
+                        );
+                      })}
+                    </div>
+                    {provided.placeholder}
+                  </>
+                );
+              }}
+            </Droppable>{" "}
             {!isAddingNewTask && (
               <motion.div
                 className={s.list_wrapper__action}
@@ -108,7 +112,7 @@ function Card({ boards, boardID, card, tasks, index, addNewTaskTitle }) {
             {isAddingNewTask && (
               <form
                 className={s.wrapper_text__card}
-                onSubmit={onAddNewTaskTitle}
+                onSubmit={(e) => onAddNewTaskTitle(e, card.id)}
               >
                 <textarea
                   name="text_area"

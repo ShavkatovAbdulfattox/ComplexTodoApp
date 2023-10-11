@@ -110,7 +110,6 @@
 
     padding: 8px;
     margin: 15px 0;
-    background: var(--color-gray-100);
     transition: .3s;
     font-size: 1rem;
     padding: 10px 15px;
@@ -118,9 +117,9 @@
     border-radius: 15px;
 
 
-    &:hover,
-    &:active {
-        background: var(--color-gray-200);
-    }
+    // &:hover,
+    // &:active {
+    //     background: var(--color-gray-200);
+    // }
 
 }

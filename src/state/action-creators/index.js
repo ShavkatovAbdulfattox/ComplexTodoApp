@@ -22,11 +22,11 @@ export const createBoard = (obj) => {
   };
 };
 
-export const addNewTaskTitle = (obj) => {
+export const addNewTaskTitle = (newTaskTitle, cardID, id) => {
   return (dispatch) => {
     dispatch({
       type: "ADD_NEW_TITLE",
-      payload: obj,
+      payload: { newTaskTitle, cardID, id },
     });
   };
 };

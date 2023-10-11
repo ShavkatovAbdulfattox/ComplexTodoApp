@@ -24,7 +24,7 @@ function Tasks({ tasks, index }) {
               {...provided.dragHandleProps}
               ref={provided.innerRef}
               style={{
-                backgroundColor: snapshot.isDragging ? "lightblue" : "white",
+                backgroundColor: snapshot.isDragging && snapshot.isDragging ? "lightblue" : "white",
                 // Add other styles as needed
               }}
             >

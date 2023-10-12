@@ -69,8 +69,8 @@ function Card({ boards, boardID, card, tasks, index }) {
             >
               <h3>{card.title}</h3>
             </div>{" "}
-            {console.log(card.id)}
-            <Droppable droppableId={card.id} direction="vertical" type="task">
+            {/* {console.log(card.id)} */}
+            <Droppable droppableId={card.id} type="task">
               {(provided, snapshot) => {
                 return (
                   <>

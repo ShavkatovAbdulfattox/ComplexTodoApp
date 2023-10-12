@@ -22,47 +22,25 @@ function CreateBoardModal({ width, close, create }) {
       name: value,
       img: selectedImage,
       renderImgNo: selectedImgNum,
-      tasks: {
-        "task-1": { id: "task-1", content: "water plants" },
-        "task-2": { id: "task-2", content: "buy oat milk" },
-        "task-3": { id: "task-3", content: "build a trello board" },
-        "task-4": { id: "task-4", content: "have a beach day" },
-        "task-5": { id: "task-5", content: "build tic tac toe" },
-      },
+      tasks: {},
       cards: {
-        "card-1": {
-          id: "card-1",
-          title: "Home Todos",
-          taskIds: ["task-1", "task-2"],
+        do: {
+          id: "do",
+          title: "Do",
+          taskIds: [],
         },
-        "card-2": {
-          id: "card-2",
-          title: "Work Todos",
-          taskIds: ["task-3"],
+        doing: {
+          id: "doing",
+          title: "Doing",
+          taskIds: [],
         },
-        "card-3": { id: "card-3", title: "Fun Todos", taskIds: ["task-4"] },
-        "card-4": { id: "card-4", title: "Completed", taskIds: ["task-5"] },
+        done: {
+          id: "done",
+          title: "Done",
+          taskIds: [],
+        },
       },
-      cardOrder: ["card-1", "card-2", "card-3", "card-4"],
-      // tasks: {},
-      // cards: {
-      //   do: {
-      //     id: "do",
-      //     title: "Do",
-      //     taskIds: [],
-      //   },
-      //   doing: {
-      //     id: "doing",
-      //     title: "Doing",
-      //     taskIds: [],
-      //   },
-      //   done: {
-      //     id: "done",
-      //     title: "Done",
-      //     taskIds: [],
-      //   },
-      // },
-      // cardOrder: ["do", "doing", "done"],
+      cardOrder: ["do", "doing", "done"],
     };
 
     // Create board

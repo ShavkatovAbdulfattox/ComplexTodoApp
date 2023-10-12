@@ -17,10 +17,18 @@ function MyBoard() {
   const { board } = boards.find((item) => item.board.id === nameAndId);
 
   const onDragEnd = (result) => {
+    const { destination, source, draggableId, type } = result;
     console.log(result);
-    // console.log("some");
-    // const { destination, source, draggableId, type } = result;
+    // Check if the draggable item was dropped outside a valid drop target
+    if (!destination) {
+      return;
+    }
+
+    // Implement logic to reorder cards or tasks based on the source and destination indices
+    // Update the state to reflect the new order.
   };
+
+  // Call onDragEnd when a drag-and-drop operation occurs within the DragDropContext.
 
   return (
     <div className={s.wrapper}>
@@ -29,7 +37,6 @@ function MyBoard() {
       {/* // ! Drag and drop context  */}
       <DragDropContext onDragEnd={onDragEnd}>
         {/* // **  Droppable * */}
-
         <Droppable droppableId="all-cards" direction="horizontal" type="card">
           {(provided) => {
             return (

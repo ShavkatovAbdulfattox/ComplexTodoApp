@@ -36,10 +36,28 @@ export default (state = initialState, { type, payload }) => {
               },
             };
 
-             return { board: updatedBoard };;
+            return { board: updatedBoard };
           } else {
             return board;
           }
+        }),
+      };
+    case "REORDER_CARDS":
+      const { newOrder, id: boardID } = payload;
+      return {
+        ...state,
+        boards: state.boards.map((boardInfo) => {
+          console.log(boardID);
+          if (boardInfo.board.id === boardID) {
+            console.log(true);
+            const updatedBoard = {
+              ...boardInfo.board,
+              cardOrder: newOrder,
+            };
+            console.log(updatedBoard);
+            return { board: updatedBoard };
+          }
+          return boardInfo;
         }),
       };
 

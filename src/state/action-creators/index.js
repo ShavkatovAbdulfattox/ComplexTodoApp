@@ -30,3 +30,13 @@ export const addNewTaskTitle = (newTaskTitle, cardID, id) => {
     });
   };
 };
+
+export const reorderCardsFn = (newOrder, id) => {
+  return (dispatch) => {
+    dispatch({
+      type: "REORDER_CARDS",
+      payload: { newOrder, id },
+      // payload: { dragInfo, id },
+    });
+  };
+};

@@ -8,27 +8,81 @@ import s from "./style.module.scss";
 import { useSelector } from "react-redux";
 
 import Card from "./Card";
+import { ITEM_TYPES } from "../../utils/constants";
+import { bindActionCreators } from "redux";
+import { actionCreators } from "../../state";
+import { useDispatch } from "react-redux";
 
 function MyBoard() {
   const { nameAndId } = useParams();
   const { boards } = useSelector((state) => state.board);
-  console.log(boards);
 
   const { board } = boards.find((item) => item.board.id === nameAndId);
 
+  const dispatch = useDispatch();
+
+  const { reorderCardsFn, moveTaskFn } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  // ! Fn for Drag and Drop
+
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
-    console.log(result);
+
     // Check if the draggable item was dropped outside a valid drop target
-    if (!destination) {
+
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
       return;
     }
 
-    // Implement logic to reorder cards or tasks based on the source and destination indices
-    // Update the state to reflect the new order.
+    if (type === ITEM_TYPES.CARD) {
+      reorderCards(source, destination, draggableId);
+    } else {
+      // Start this is takes the ID from where we will take
+      const start = board.cards[source.droppableId];
+      // Finish this will return the id of when we will put
+      const finish = board.cards[destination.droppableId];
+      if (start.id === finish.id) {
+        reorderTasksWithCard();
+      } else {
+        moveTask(start, finish, source.index, destination.index, draggableId);
+      }
+    }
   };
 
-  // Call onDragEnd when a drag-and-drop operation occurs within the DragDropContext.
+  function reorderCards(source, destination, draggableId) {
+    const newCardOrder = Array.from(board.cardOrder);
+    newCardOrder.splice(source.index, 1);
+    console.log("!", newCardOrder);
+    newCardOrder.splice(destination.index, 0, draggableId);
+    console.log("2", newCardOrder);
+    reorderCardsFn(newCardOrder, board.id);
+  }
+
+  function reorderTasksWithCard() {}
+  function moveTask(start, finish, sourceId, destinationId, draggableId) {
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(sourceId, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
+    // console.log("newStrart",newStart);
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destinationId, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
+    moveTaskFn({ newStart, newFinish }, board.id);
+  }
 
   return (
     <div className={s.wrapper}>
@@ -41,9 +95,9 @@ function MyBoard() {
           {(provided) => {
             return (
               <section
-                className={s.wrapper_content}
                 {...provided.droppableProps}
                 ref={provided.innerRef}
+                className={s.wrapper_content}
               >
                 {board.cardOrder.map((id, index) => {
                   const card = board.cards[id];
@@ -60,7 +114,6 @@ function MyBoard() {
                       card={card}
                       tasks={cardTask}
                       index={index}
-                      boards={boards}
                       boardID={nameAndId}
                     />
                   );

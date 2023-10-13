@@ -49,3 +49,12 @@ export const moveTaskFn = (startAndFinish, id) => {
     });
   };
 };
+
+export const reorderTaskFn = (reorderTask, id) => {
+  return (dispatch) => {
+    dispatch({
+      type: "REORDER_TASK",
+      payload: { reorderTask, id },
+    });
+  };
+};

@@ -82,6 +82,35 @@ export default (state = initialState, { type, payload }) => {
         }),
       };
 
+    case "REORDER_TASK":
+      const {
+        reorderTask: { card, newTaskIds },
+        id: reorderBid,
+      } = payload;
+
+      console.log(card,newTaskIds);
+
+      return {
+        ...state,
+        boards: state.boards.map(({ board }) => {
+          if (board.id === reorderBid) {
+            const updateBoardCards = {
+              ...board,
+              cards: {
+                ...board.cards,
+                [card.id]: {
+                  ...card,
+                  taskIds: newTaskIds,
+                },
+              },
+            };
+
+            return { board: updateBoardCards };
+          }
+          return board;
+        }),
+      };
+
     default:
       return state;
   }

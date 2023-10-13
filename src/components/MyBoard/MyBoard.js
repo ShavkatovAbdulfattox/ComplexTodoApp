@@ -21,7 +21,7 @@ function MyBoard() {
 
   const dispatch = useDispatch();
 
-  const { reorderCardsFn, moveTaskFn } = bindActionCreators(
+  const { reorderCardsFn, moveTaskFn, reorderTaskFn } = bindActionCreators(
     actionCreators,
     dispatch
   );
@@ -30,8 +30,6 @@ function MyBoard() {
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
-
-    // Check if the draggable item was dropped outside a valid drop target
 
     if (
       !destination ||
@@ -49,7 +47,12 @@ function MyBoard() {
       // Finish this will return the id of when we will put
       const finish = board.cards[destination.droppableId];
       if (start.id === finish.id) {
-        reorderTasksWithCard();
+        reorderTasksWithCard(
+          start,
+          source.index,
+          destination.index,
+          draggableId
+        );
       } else {
         moveTask(start, finish, source.index, destination.index, draggableId);
       }
@@ -65,7 +68,14 @@ function MyBoard() {
     reorderCardsFn(newCardOrder, board.id);
   }
 
-  function reorderTasksWithCard() {}
+  function reorderTasksWithCard(card, sourceIdx, destinationIdx, draggableId) {
+    const newTaskIds = Array.from(card.taskIds);
+    newTaskIds.splice(sourceIdx, 1);
+    newTaskIds.splice(destinationIdx, 0, draggableId);
+
+    reorderTaskFn({card,newTaskIds}, board.id);
+  }
+
   function moveTask(start, finish, sourceId, destinationId, draggableId) {
     const startTaskIds = Array.from(start.taskIds);
     startTaskIds.splice(sourceId, 1);

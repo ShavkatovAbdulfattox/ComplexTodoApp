@@ -40,3 +40,12 @@ export const reorderCardsFn = (newOrder, id) => {
     });
   };
 };
+
+export const moveTaskFn = (startAndFinish, id) => {
+  return (dispatch) => {
+    dispatch({
+      type: "MOVE_TASK",
+      payload: { startAndFinish, id },
+    });
+  };
+};

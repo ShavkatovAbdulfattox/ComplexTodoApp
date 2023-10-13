@@ -49,7 +49,6 @@ export default (state = initialState, { type, payload }) => {
         boards: state.boards.map((boardInfo) => {
           console.log(boardID);
           if (boardInfo.board.id === boardID) {
-            console.log(true);
             const updatedBoard = {
               ...boardInfo.board,
               cardOrder: newOrder,
@@ -58,6 +57,28 @@ export default (state = initialState, { type, payload }) => {
             return { board: updatedBoard };
           }
           return boardInfo;
+        }),
+      };
+
+    case "MOVE_TASK":
+      const { startAndFinish, id: moveBid } = payload;
+
+      return {
+        ...state,
+        boards: state.boards.map(({ board }) => {
+          if (board.id === moveBid) {
+            const updateBoardCards = {
+              ...board,
+              cards: {
+                ...board.cards,
+                [startAndFinish.newStart.id]: startAndFinish.newStart,
+                [startAndFinish.newFinish.id]: startAndFinish.newFinish,
+              },
+            };
+
+            return { board: updateBoardCards };
+          }
+          return board;
         }),
       };
 

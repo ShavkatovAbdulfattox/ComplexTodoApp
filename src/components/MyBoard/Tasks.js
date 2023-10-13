@@ -19,7 +19,6 @@ function Tasks({ tasks, index }) {
             // }}
           >
             {tasks.content}
-            {console.log(snapshot.isDragging)}
             <button>
               <RiDeleteBinLine />
             </button>

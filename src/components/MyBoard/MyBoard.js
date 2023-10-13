@@ -21,11 +21,18 @@ function MyBoard() {
 
   const dispatch = useDispatch();
 
-  const { reorderCardsFn } = bindActionCreators(actionCreators, dispatch);
+  const { reorderCardsFn, moveTaskFn } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  // ! Fn for Drag and Drop
 
   const onDragEnd = (result) => {
     const { destination, source, draggableId, type } = result;
+
     // Check if the draggable item was dropped outside a valid drop target
+
     if (
       !destination ||
       (destination.droppableId === source.droppableId &&
@@ -37,6 +44,15 @@ function MyBoard() {
     if (type === ITEM_TYPES.CARD) {
       reorderCards(source, destination, draggableId);
     } else {
+      // Start this is takes the ID from where we will take
+      const start = board.cards[source.droppableId];
+      // Finish this will return the id of when we will put
+      const finish = board.cards[destination.droppableId];
+      if (start.id === finish.id) {
+        reorderTasksWithCard();
+      } else {
+        moveTask(start, finish, source.index, destination.index, draggableId);
+      }
     }
   };
 
@@ -47,6 +63,25 @@ function MyBoard() {
     newCardOrder.splice(destination.index, 0, draggableId);
     console.log("2", newCardOrder);
     reorderCardsFn(newCardOrder, board.id);
+  }
+
+  function reorderTasksWithCard() {}
+  function moveTask(start, finish, sourceId, destinationId, draggableId) {
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(sourceId, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
+    // console.log("newStrart",newStart);
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destinationId, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
+
+    moveTaskFn({ newStart, newFinish }, board.id);
   }
 
   return (

@@ -5,14 +5,13 @@ import { AiOutlineClose } from "react-icons/ai";
 import plus from "../../assets/images/plus.svg";
 
 import s from "./style.module.scss";
-import { useSelector } from "react-redux";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuidv4 } from "uuid";
 import { actionCreators } from "../../state";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 
-function Card({ boards, boardID, card, tasks, index }) {
+function Card({ boardID, card, tasks, index }) {
   const dispatch = useDispatch();
 
   const { addNewTaskTitle } = bindActionCreators(actionCreators, dispatch);
@@ -60,8 +59,8 @@ function Card({ boards, boardID, card, tasks, index }) {
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
-            className={s.list_wrapper}
             id={card.id}
+            className={s.list_wrapper}
           >
             <div
               className={s.list_wrapper__header}
@@ -69,7 +68,6 @@ function Card({ boards, boardID, card, tasks, index }) {
             >
               <h3>{card.title}</h3>
             </div>{" "}
-            {/* {console.log(card.id)} */}
             <Droppable droppableId={card.id} type="task">
               {(provided, snapshot) => {
                 return (
@@ -82,6 +80,7 @@ function Card({ boards, boardID, card, tasks, index }) {
                         backgroundColor: snapshot.isDraggingOver
                           ? "lightgreen"
                           : "",
+                        minHeight: snapshot.isDraggingOver ? "52px" : "",
                       }}
                     >
                       {tasks.map((tasks, index) => {
@@ -90,43 +89,45 @@ function Card({ boards, boardID, card, tasks, index }) {
                         );
                       })}
                     </div>
-                    {provided.placeholder}
+                    {provided.placeholder} {/* Include the placeholder here */}
                   </>
                 );
               }}
-            </Droppable>{" "}
-            {!isAddingNewTask && (
-              <motion.div
-                className={s.list_wrapper__action}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setIsAddingNewTask(true)}
-              >
-                <p>
-                  {" "}
-                  <span>
-                    <img src={plus} alt="plus" />
-                  </span>{" "}
-                  Add a card
-                </p>
-              </motion.div>
-            )}
-            {isAddingNewTask && (
-              <form
-                className={s.wrapper_text__card}
-                onSubmit={(e) => onAddNewTaskTitle(e, card.id)}
-              >
-                <textarea
-                  name="text_area"
-                  value={textCardValue}
-                  onChange={(e) => setCardTextValue(e.target.value)}
-                  placeholder="Enter title for this card"
-                />
-                <div>
-                  <button>Add card</button>
-                  <AiOutlineClose onClick={() => setIsAddingNewTask(false)} />
-                </div>
-              </form>
-            )}
+            </Droppable>
+            <div>
+              {!isAddingNewTask && (
+                <motion.div
+                  className={s.list_wrapper__action}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsAddingNewTask(true)}
+                >
+                  <p>
+                    {" "}
+                    <span>
+                      <img src={plus} alt="plus" />
+                    </span>{" "}
+                    Add a card
+                  </p>
+                </motion.div>
+              )}
+              {isAddingNewTask && (
+                <form
+                  className={s.wrapper_text__card}
+                  onSubmit={(e) => onAddNewTaskTitle(e, card.id)}
+                >
+                  <textarea
+                    name="text_area"
+                    value={textCardValue}
+                    onChange={(e) => setCardTextValue(e.target.value)}
+                    placeholder="Enter title for this card"
+                  />
+                  <div>
+                    <button>Add card</button>
+                    <AiOutlineClose onClick={() => setIsAddingNewTask(false)} />
+                  </div>
+                </form>
+              )}
+            </div>
           </div>
         );
       }}
@@ -135,29 +136,3 @@ function Card({ boards, boardID, card, tasks, index }) {
 }
 
 export default Card;
-{
-  /* // ! Tasks */
-}
-{
-  /* {boardTaskTitle?.tasks?.length >= 0 && (
-    <Tasks boardTaskTitle={boardTaskTitle} />
-  )} */
-}
-{
-  /* {!isOpenTextCard && (
-      <motion.div
-        className={s.list_wrapper__action}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpenTextCard(true)}
-      >
-        <p>
-          {" "}
-          <span>
-            <img src={plus} alt="plus" />
-          </span>{" "}
-          Add a card
-        </p>
-      </motion.div>
-    )}
-    */
-}

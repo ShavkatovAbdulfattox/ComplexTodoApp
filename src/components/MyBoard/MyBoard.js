@@ -60,9 +60,9 @@ function MyBoard() {
           {(provided) => {
             return (
               <section
-                className={s.wrapper_content}
                 {...provided.droppableProps}
                 ref={provided.innerRef}
+                className={s.wrapper_content}
               >
                 {board.cardOrder.map((id, index) => {
                   const card = board.cards[id];
@@ -79,7 +79,6 @@ function MyBoard() {
                       card={card}
                       tasks={cardTask}
                       index={index}
-                      boards={boards}
                       boardID={nameAndId}
                     />
                   );

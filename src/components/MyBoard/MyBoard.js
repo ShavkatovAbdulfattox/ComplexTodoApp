@@ -96,7 +96,13 @@ function MyBoard() {
 
   return (
     <div className={s.wrapper}>
-      <h2>Page with tasks</h2>
+      <h2>
+        Page with tasks{" "}
+        <span>
+          {" "}
+          <mark> {board.name}</mark>
+        </span>
+      </h2>
 
       {/* // ! Drag and drop context  */}
       <DragDropContext onDragEnd={onDragEnd}>

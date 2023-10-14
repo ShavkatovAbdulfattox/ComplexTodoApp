@@ -112,25 +112,41 @@ export default (state = initialState, { type, payload }) => {
       };
 
     case "REMOVE_TASK":
-      const { taskId, id: removeBid } = payload;
-      // const updatedBoards = state.boards.map(({ board }) => {
-      //   if (board.id === removeBid) {
-      //     if (board.tasks && board.tasks.hasOwnProperty(taskId)) {
-      //       delete board.tasks[taskId];
-      //     }
-      //     console.log(board.tasks);
-
-      //     // You can return the updated board here
-      //     return { board: { ...board } };
-      //   } else {
-      //     return { board: { ...board } };
-      //   }
-      // });
-
-      // console.log(updatedBoards);
+      const { boardTasks, taskId, id: removeBid } = payload;
 
       return {
         ...state,
+        boards: state.boards.map(({ board }) => {
+          if (board.id === removeBid) {
+            const updatedRemoveTask = {
+              ...board,
+              tasks: boardTasks,
+            };
+
+            // Also remove the task from each card's taskIds
+            const updatedCards = Object.keys(updatedRemoveTask.cards).reduce(
+              (cards, cardId) => {
+                const card = updatedRemoveTask.cards[cardId];
+
+                const updatedCard = {
+                  ...card,
+                  taskIds: card.taskIds.filter((task) => task !== taskId),
+                };
+                cards[cardId] = updatedCard;
+                return cards;
+              },
+              {}
+            );
+
+            return {
+              board: {
+                ...updatedRemoveTask,
+                cards: updatedCards,
+              },
+            };
+          }
+          return board;
+        }),
       };
 
     default:

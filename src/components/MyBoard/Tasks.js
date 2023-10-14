@@ -13,13 +13,13 @@ function Tasks({ board, boardID, tasks, index }) {
   const { removeTaskFn } = bindActionCreators(actionCreators, dispatch);
 
   const removeTask = (taskId) => {
-    if (boardID) {
+    if (taskId) {
       if (board.tasks && board.tasks.hasOwnProperty(taskId)) {
         delete board.tasks[taskId];
       }
-      console.log(board.tasks);
     }
-    // removeTaskFn(taskId, boardID);
+
+    removeTaskFn(board.tasks, taskId, boardID);
   };
 
   return (

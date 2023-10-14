@@ -83,16 +83,15 @@ function Card({ board,boardID, card, tasks, index }) {
                         minHeight: snapshot.isDraggingOver ? "52px" : "",
                       }}
                     >
-                      {tasks.map((tasks, index) => {
-                        return (
-                          <Tasks
-                            key={tasks.id}
-                            board={board}
-                            boardID={boardID}
-                            tasks={tasks}
-                            index={index}
-                          />
-                        );
+                      {tasks.map((task, index) => {
+                        if (task && task.id) {
+                          return (
+                            <Tasks key={task.id} board={board} boardID={boardID} tasks={task} index={index} />
+                          );
+                        } else {
+                          // Handle the case where the task is undefined or doesn't have an 'id'
+                          return null;
+                        }
                       })}
                     </div>
                     {provided.placeholder} {/* Include the placeholder here */}

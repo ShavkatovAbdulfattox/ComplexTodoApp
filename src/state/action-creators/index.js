@@ -58,3 +58,11 @@ export const reorderTaskFn = (reorderTask, id) => {
     });
   };
 };
+export const removeTaskFn = (taskId, id) => {
+  return (dispatch) => {
+    dispatch({
+      type: "REMOVE_TASK",
+      payload: { taskId, id },
+    });
+  };
+};

@@ -88,7 +88,7 @@ export default (state = initialState, { type, payload }) => {
         id: reorderBid,
       } = payload;
 
-      console.log(card,newTaskIds);
+      console.log(card, newTaskIds);
 
       return {
         ...state,
@@ -109,6 +109,28 @@ export default (state = initialState, { type, payload }) => {
           }
           return board;
         }),
+      };
+
+    case "REMOVE_TASK":
+      const { taskId, id: removeBid } = payload;
+      // const updatedBoards = state.boards.map(({ board }) => {
+      //   if (board.id === removeBid) {
+      //     if (board.tasks && board.tasks.hasOwnProperty(taskId)) {
+      //       delete board.tasks[taskId];
+      //     }
+      //     console.log(board.tasks);
+
+      //     // You can return the updated board here
+      //     return { board: { ...board } };
+      //   } else {
+      //     return { board: { ...board } };
+      //   }
+      // });
+
+      // console.log(updatedBoards);
+
+      return {
+        ...state,
       };
 
     default:

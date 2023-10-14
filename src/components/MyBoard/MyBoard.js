@@ -18,7 +18,7 @@ function MyBoard() {
   const { boards } = useSelector((state) => state.board);
 
   const { board } = boards.find((item) => item.board.id === nameAndId);
-
+  console.log(board);
   const dispatch = useDispatch();
 
   const { reorderCardsFn, moveTaskFn, reorderTaskFn } = bindActionCreators(
@@ -73,7 +73,7 @@ function MyBoard() {
     newTaskIds.splice(sourceIdx, 1);
     newTaskIds.splice(destinationIdx, 0, draggableId);
 
-    reorderTaskFn({card,newTaskIds}, board.id);
+    reorderTaskFn({ card, newTaskIds }, board.id);
   }
 
   function moveTask(start, finish, sourceId, destinationId, draggableId) {
@@ -125,6 +125,7 @@ function MyBoard() {
                       tasks={cardTask}
                       index={index}
                       boardID={nameAndId}
+                      board={board}
                     />
                   );
                 })}

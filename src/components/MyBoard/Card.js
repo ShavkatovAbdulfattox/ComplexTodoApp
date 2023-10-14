@@ -11,7 +11,7 @@ import { actionCreators } from "../../state";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 
-function Card({ boardID, card, tasks, index }) {
+function Card({ board,boardID, card, tasks, index }) {
   const dispatch = useDispatch();
 
   const { addNewTaskTitle } = bindActionCreators(actionCreators, dispatch);
@@ -85,7 +85,13 @@ function Card({ boardID, card, tasks, index }) {
                     >
                       {tasks.map((tasks, index) => {
                         return (
-                          <Tasks key={tasks.id} tasks={tasks} index={index} />
+                          <Tasks
+                            key={tasks.id}
+                            board={board}
+                            boardID={boardID}
+                            tasks={tasks}
+                            index={index}
+                          />
                         );
                       })}
                     </div>
@@ -136,3 +142,4 @@ function Card({ boardID, card, tasks, index }) {
 }
 
 export default Card;
+

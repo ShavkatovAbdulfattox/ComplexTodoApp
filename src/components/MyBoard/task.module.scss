@@ -1,6 +1,21 @@
 .wrapper {
     padding: 10px 0px;
 
+    &_input {
+        width: 100%;
+        overflow: hidden;
+        overflow-wrap: break-word;
+        resize: none;
+        height: 44px;
+        background: none;
+        border: 1px solid gray;
+        border-radius: 10px;
+        box-shadow: none;
+        padding: 5px;
+        font-size: 1rem;
+        color: black;
+    }
+
     &_title {
         display: flex;
         justify-content: space-between;

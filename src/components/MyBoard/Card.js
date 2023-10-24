@@ -116,7 +116,7 @@ function Card({ board, boardID, card, tasks, index }) {
         {!isAddingNewTask && (
           <motion.div
             className={s.list_wrapper__action}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.98 }}
             onClick={() => setIsAddingNewTask(true)}
           >
             <p>

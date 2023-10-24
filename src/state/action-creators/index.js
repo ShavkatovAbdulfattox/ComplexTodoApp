@@ -10,7 +10,7 @@ export const createBoard = (obj) => {
 
     // Add the new board to the existing boards
     existingBoards.push(...existingBoards, { board: obj });
-
+    console.log(existingBoards);
     // Update the modified array back into localStorage
     setToLocalStorage("boards", existingBoards);
 
@@ -58,11 +58,20 @@ export const reorderTaskFn = (reorderTask, id) => {
     });
   };
 };
-export const removeTaskFn = (boardTasks,taskId, id) => {
+export const removeTaskFn = (boardTasks, taskId, id) => {
   return (dispatch) => {
     dispatch({
       type: "REMOVE_TASK",
       payload: { boardTasks, taskId, id },
+    });
+  };
+};
+
+export const editTaskFn = (value, taskId, id) => {
+  return (dispatch) => {
+    dispatch({
+      type: "EDIT_TASK",
+      payload: { value, taskId, id },
     });
   };
 };

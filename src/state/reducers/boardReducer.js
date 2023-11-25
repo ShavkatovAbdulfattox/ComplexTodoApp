@@ -1,16 +1,17 @@
 import { getFromLocalStorage } from "../../helpers/localStorage.helper";
 
 const initialState = {
-  boards: getFromLocalStorage("boards") ? getFromLocalStorage("boards") : [],
+  boards: getFromLocalStorage("boards"),
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case "CREATE_BOARD":
       const newBoard = { board: payload };
+      console.log(newBoard);
       return {
         ...state,
-        boards: [...state.boards, newBoard],
+        boards: getFromLocalStorage("boards"),
       };
     case "ADD_NEW_TITLE":
       const { newTaskTitle, cardID, id } = payload;

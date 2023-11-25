@@ -8,12 +8,12 @@ export const createBoard = (obj) => {
     // Get existing boards from local storage
     const existingBoards = getFromLocalStorage("boards") || [];
 
-    // Add the new board to the existing boards
-    existingBoards.push(...existingBoards, { board: obj });
-    console.log(existingBoards);
+    // // Add the new board to the existing boards
+    // existingBoards.push(...existingBoards, { board: obj });
+    existingBoards.push({ board: obj });
     // Update the modified array back into localStorage
     setToLocalStorage("boards", existingBoards);
-
+    console.log(existingBoards);
     // Dispatch the action to update the Redux store
     dispatch({
       type: "CREATE_BOARD",

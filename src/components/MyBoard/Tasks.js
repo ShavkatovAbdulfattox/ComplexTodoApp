@@ -9,8 +9,9 @@ import { actionCreators } from "../../state";
 import { useSelector } from "react-redux";
 
 function Tasks({ boardID, tasks, index }) {
+  // board
   let board = useSelector((state) => state.board.boards);
-  board = board[0].board;
+  // console.log(board);
 
   const [isTaskEditing, setIsTaskEditing] = useState(false);
   const [taskEditingValue, setTaskEditingValue] = useState("");
@@ -36,7 +37,6 @@ function Tasks({ boardID, tasks, index }) {
     e.preventDefault();
     if (id) {
       // setting board value to the editing mode
-
       console.log(board.tasks[id].content);
       // setTaskEditingValue()
 

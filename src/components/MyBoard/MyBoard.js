@@ -1,7 +1,7 @@
 import React from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import s from "./style.module.scss";
 
@@ -18,7 +18,6 @@ function MyBoard() {
   const { boards } = useSelector((state) => state.board);
 
   const { board } = boards.find((item) => item.board.id === nameAndId);
-  console.log(board);
   const dispatch = useDispatch();
 
   const { reorderCardsFn, moveTaskFn, reorderTaskFn } = bindActionCreators(
@@ -96,6 +95,10 @@ function MyBoard() {
 
   return (
     <div className={s.wrapper}>
+      <Link to={"/"}>
+        <h3>Return Menu</h3>
+      </Link>
+
       <h2>
         Page with tasks{" "}
         <span>

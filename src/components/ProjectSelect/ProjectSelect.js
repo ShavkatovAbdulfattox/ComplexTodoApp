@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 function ProjectSelect() {
   const { boards } = useSelector((state) => state.board);
+
   const dispatch = useDispatch();
   const { createBoard } = bindActionCreators(actionCreators, dispatch);
 
